@@ -31,6 +31,11 @@ public class DruidUtil {
         dataSource.setTimeBetweenEvictionRunsMillis(60000);
         dataSource.setMinEvictableIdleTimeMillis(300000);
 
+        /**
+         * 让连接池知道数据库已经断开了，并且自动测试连接查询:
+         * 用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'。
+         * 如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会起作用
+         */
         dataSource.setValidationQuery("SELECT 'x'");
         dataSource.setTestWhileIdle(true);
         dataSource.setTestOnBorrow(false);
