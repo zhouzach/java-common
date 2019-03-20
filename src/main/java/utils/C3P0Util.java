@@ -8,6 +8,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * https://www.programcreek.com/java-api-examples/?api=com.mchange.v2.c3p0.ComboPooledDataSource
+ */
 public class C3P0Util {
     private static ComboPooledDataSource dataSource = new ComboPooledDataSource();
 
@@ -50,7 +53,7 @@ public class C3P0Util {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException(e);
+            throw new SQLException(e.getMessage());
         }
     }
 
