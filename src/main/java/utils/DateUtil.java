@@ -1,33 +1,25 @@
 package utils;
 
-import org.joda.time.DateTime;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DateUtil {
 
-    public static Date pase(String str) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-        try {
-            return dateFormat.parse(str);
-        }catch (ParseException e){
-            e.printStackTrace();
-        }
+    public static LocalDate parse(String str) {
+        return LocalDate.parse(str, formatter);
+    }
 
-        return new Date();
-
+    public static LocalDateTime parse4DateTime(String str) {
+        return LocalDate.parse(str, formatter).atStartOfDay();
     }
 
     public static void main(String[] args){
-        Date d=pase("20190101");
-        System.out.println(d);
-
-        String dateTime = new DateTime(d).toString("yyyy-MM-dd");
+        LocalDate date = parse("20190101");
+        LocalDateTime dateTime = parse4DateTime("20190101");
+        System.out.println(date);
         System.out.println(dateTime);
-
     }
 }
