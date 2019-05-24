@@ -16,6 +16,7 @@ public class HttpClientStarter {
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     private static OkHttpClient buildeClient(long connectTimeout, long readTimeout, long writeTimeout) {
+
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(connectTimeout, TimeUnit.SECONDS);
         builder.readTimeout(readTimeout, TimeUnit.SECONDS);
@@ -28,6 +29,7 @@ public class HttpClientStarter {
     }
 
     public static String post(String url, RequestBody body, long connectTimeout, long readTimeout, long writeTimeout) {
+
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)
@@ -51,6 +53,7 @@ public class HttpClientStarter {
         RequestBody body = RequestBody.create(JSON, postJson.toString());
 
         String response = post(postUrl, body);
+
         System.out.println(response);
 
         String url = "";
@@ -69,6 +72,7 @@ public class HttpClientStarter {
                 .build();
 
         String response1 = post(url, formBody);
+
         System.out.println(response1);
     }
 }
