@@ -3,6 +3,8 @@ package utils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -12,6 +14,8 @@ import java.util.concurrent.TimeUnit;
  * https://www.programcreek.com/java-api-examples/?api=com.squareup.okhttp.ResponseBody
  */
 public class HttpClientStarter {
+
+    private static Logger logger = LoggerFactory.getLogger(HttpClientStarter.class);
 
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
@@ -37,7 +41,7 @@ public class HttpClientStarter {
         try (Response response = buildeClient(connectTimeout, readTimeout, writeTimeout).newCall(request).execute()) {
             return response.body().string();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return "";
         }
     }
