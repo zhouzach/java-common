@@ -5,6 +5,11 @@ import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.Map;
+
+/**
+ * Java tuple – Working with tuples in Java
+ * https://howtodoinjava.com/java/basics/java-tuples/
+ */
 public class MapHelper {
 
     public static Pair<Integer, ArrayList<String>> get(Map<Integer, ArrayList<String>> map){
