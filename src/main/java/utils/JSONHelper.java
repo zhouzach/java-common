@@ -5,7 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import models.Report;
 
-public class JSONUtil {
+public class JSONHelper {
     public static JSONObject pase(String responseBody) {
         return JSON.parseObject(responseBody, JSONObject.class);
     }
