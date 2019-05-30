@@ -28,6 +28,29 @@ public class HttpClientStarter {
         return builder.build();
     }
 
+    public static String get(String url) {
+        return get(url, 60 * 60 * 24, 60 * 60 * 24, 60 * 60 * 24);
+    }
+
+    public static String get(String url, long connectTimeout, long readTimeout, long writeTimeout) {
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        return execute(request, connectTimeout, readTimeout, writeTimeout);
+    }
+
+    public static String execute(Request request, long connectTimeout, long readTimeout, long writeTimeout) {
+
+        try (Response response = buildeClient(connectTimeout, readTimeout, writeTimeout).newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            logger.error(e.getMessage());
+            return "";
+        }
+    }
+
     public static String post(String url, RequestBody body) {
         return post(url, body, 60 * 60 * 24, 60 * 60 * 24, 60 * 60 * 24);
     }
@@ -38,16 +61,14 @@ public class HttpClientStarter {
                 .url(url)
                 .post(body)
                 .build();
-        try (Response response = buildeClient(connectTimeout, readTimeout, writeTimeout).newCall(request).execute()) {
-            return response.body().string();
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-            return "";
-        }
+
+        return execute(request, connectTimeout, readTimeout, writeTimeout);
     }
 
     public static void main(String[] args) {
-        HttpClientStarter starter = new HttpClientStarter();
+
+        String res=get("http://www.baidu.com");
+        System.out.println(res);
 
         String postUrl = "";
 
@@ -56,9 +77,8 @@ public class HttpClientStarter {
         postJson.put("end", "");
         RequestBody body = RequestBody.create(JSON, postJson.toString());
 
-        String response = post(postUrl, body);
-
-        System.out.println(response);
+//        String response = post(postUrl, body);
+//        System.out.println(response);
 
         String url = "";
 
@@ -75,8 +95,7 @@ public class HttpClientStarter {
                 .add("", jsonArray.toString())
                 .build();
 
-        String response1 = post(url, formBody);
-
-        System.out.println(response1);
+//        String response1 = post(url, formBody);
+//        System.out.println(response1);
     }
 }
