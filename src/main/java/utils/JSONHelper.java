@@ -6,11 +6,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.jayway.jsonpath.JsonPath;
 import models.Report;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class JSONHelper {
+
+    public static String toJson(Report.Cell cell) {
+        return JSON.toJSONString(cell);
+    }
+
     public static JSONObject pase(String responseBody) {
         return JSON.parseObject(responseBody, JSONObject.class);
     }
@@ -54,8 +60,9 @@ public class JSONHelper {
         System.out.println(store);
     }
 
-    public static void main(String[] args) {
-        String json = "{\n" +
+    public static String getJsonStr(){
+        String str =
+              "{\n" +
                 "\"store1\": {\n" +
                 "        \"pic\": [\n" +
                 "            {\n" +
@@ -115,7 +122,23 @@ public class JSONHelper {
                 "    },\n" +
                 "    \"expensive\": 10\n" +
                 "}";
+        return str;
+    }
+
+    public static void main(String[] args) {
+//        String json = getJsonStr();
 //        readJson2Map(json);
-        readJson2List(json);
+//        readJson2List(json);
+
+        List<Integer> obj = new ArrayList<>();
+        obj.add(1);
+        obj.add(2);
+
+        List<String> s = new ArrayList<>();
+        s.add("a");
+        s.add("b");
+
+        String json = JSON.toJSONString(s);
+        System.out.println(json);
     }
 }
