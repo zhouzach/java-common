@@ -20,11 +20,11 @@
             <version>0.9.5.3</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.sshx</groupId>
-            <artifactId>sshx</artifactId>
-            <version>1.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.sshx</groupId>-->
+<!--            <artifactId>sshx</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
