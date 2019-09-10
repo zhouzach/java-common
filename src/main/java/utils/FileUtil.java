@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class FileUtil {
 
@@ -43,12 +45,24 @@ public class FileUtil {
         }
     }
 
-    public static void main(String[] args) {
-        long timer = System.currentTimeMillis();
-        // 用5M的缓冲读取文本文件
-        readBigFile("", 5 * 1024 * 1024);
+    public static void writeFile(String path, String content) {
+        try {
+            Files.write(Paths.get(path), content.getBytes());
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
-        timer = System.currentTimeMillis() - timer;
-        System.out.println("处理时间：" + timer);
+    public static void main(String[] args) {
+//        long timer = System.currentTimeMillis();
+//         用5M的缓冲读取文本文件
+//        readBigFile("", 5 * 1024 * 1024);
+//
+//        timer = System.currentTimeMillis() - timer;
+//        System.out.println("处理时间：" + timer);
+
+        String path = "/Users/Zach/java-common/output/hello1.txt";
+        writeFile(path,"world12");
     }
 }
