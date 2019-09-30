@@ -94,8 +94,8 @@ public class DruidUtil {
             ResultSet rs = query(connection, sql);
 
             while (rs.next()) {
-                val name = rs.getString("SCHED_NAME");
-                val age = rs.getString("TRIGGER_GROUP");
+                String name = rs.getString("SCHED_NAME");
+                String age = rs.getString("TRIGGER_GROUP");
                 System.out.println(name);
                 System.out.println(age);
             }

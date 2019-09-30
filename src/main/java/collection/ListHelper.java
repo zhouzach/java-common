@@ -31,7 +31,6 @@ public class ListHelper {
         // Printing the list
         System.out.println("List using Syntax 3: " + streamList.toString());
 
-        List.of("first","second");
 
 
     }
