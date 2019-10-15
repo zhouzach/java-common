@@ -3,7 +3,9 @@ package utils;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.fasterxml.uuid.Generators;
 
+import java.math.BigDecimal;
 import java.sql.*;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -53,13 +55,13 @@ public class DruidUtil {
         return connection;
     }
 
-    public static ResultSet query(Connection conn, String sql) throws SQLException {
+    public static Object query(Connection conn, String sql, final ResultSetHandler handler) throws SQLException {
         PreparedStatement pstmt;
 
         try {
             pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
-            return rs;
+            return handler.handle(rs);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,6 +74,17 @@ public class DruidUtil {
         try {
             Statement statement = conn.createStatement();
             statement.executeUpdate(updateStr);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void execBatchUpdate(Connection conn, String updateStr, final PreparedStatementHandler handler) {
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(updateStr);
+            handler.handle(preparedStatement);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -93,89 +106,145 @@ public class DruidUtil {
     public static void run(Connection connection) {
         String sql = "SELECT * FROM data_field where business_type = 'order' and is_condition_field = 1";
         try {
-            ResultSet rs = query(connection, sql);
+            ResultSetHandler handler = new ResultSetHandler() {
+                @Override
+                public Object handle(ResultSet rs) {
+                    try {
+                        while (rs.next()) {
+                            UUID uuid = Generators.timeBasedGenerator().generate();
+                            String id = uuid.toString().replaceAll("-", "");
+                            Long create_at = rs.getLong("create_at");
+                            String creator_id = rs.getString("creator_id");
+                            String last_modifier_id = rs.getString("last_modifier_id");
+                            Long last_modify_at = rs.getLong("last_modify_at");
+                            String business_type = "tag_order";
+                            String field_category = rs.getString("field_category");
+                            String field_category_name = rs.getString("field_category_name");
+                            String field_name = rs.getString("field_name");
+                            String field_operators = rs.getString("field_operators");
+                            String field_type = rs.getString("field_type");
+                            String field_values = rs.getString("field_values");
+                            Integer is_update_value = rs.getInt("is_update_value");
+                            Integer power = rs.getInt("power");
+                            String table_name = rs.getString("table_name");
+                            Integer is_condition_field = rs.getInt("is_condition_field");
+                            Integer is_explore_field = rs.getInt("is_explore_field");
+                            String field_show_name = rs.getString("field_show_name");
+                            Integer is_updated = rs.getInt("is_updated");
+                            System.out.println(id);
+                            System.out.println(create_at);
+                            System.out.println(creator_id);
+                            System.out.println(last_modifier_id);
+                            System.out.println(last_modify_at);
+                            System.out.println(business_type);
+                            System.out.println(field_category);
+                            System.out.println(field_category_name);
+                            System.out.println(field_name);
+                            System.out.println(field_operators);
+                            System.out.println(field_type);
+                            System.out.println(field_values);
+                            System.out.println(is_update_value);
+                            System.out.println(power);
+                            System.out.println(table_name);
+                            System.out.println(is_condition_field);
+                            System.out.println(is_explore_field);
+                            System.out.println(field_show_name);
+                            System.out.println(is_updated);
 
-            while (rs.next()) {
-                UUID uuid = Generators.timeBasedGenerator().generate();
-                String id = uuid.toString().replaceAll("-", "");
-                Long create_at = rs.getLong("create_at");
-                String creator_id = rs.getString("creator_id");
-                String last_modifier_id = rs.getString("last_modifier_id");
-                Long last_modify_at = rs.getLong("last_modify_at");
-                String business_type = "tag_order";
-                String field_category = rs.getString("field_category");
-                String field_category_name = rs.getString("field_category_name");
-                String field_name = rs.getString("field_name");
-                String field_operators = rs.getString("field_operators");
-                String field_type = rs.getString("field_type");
-                String field_values = rs.getString("field_values");
-                Integer is_update_value = rs.getInt("is_update_value");
-                Integer power = rs.getInt("power");
-                String table_name = rs.getString("table_name");
-                Integer is_condition_field = rs.getInt("is_condition_field");
-                Integer is_explore_field = rs.getInt("is_explore_field");
-                String field_show_name = rs.getString("field_show_name");
-                Integer is_updated = rs.getInt("is_updated");
-                System.out.println(id);
-                System.out.println(create_at);
-                System.out.println(creator_id);
-                System.out.println(last_modifier_id);
-                System.out.println(last_modify_at);
-                System.out.println(business_type);
-                System.out.println(field_category);
-                System.out.println(field_category_name);
-                System.out.println(field_name);
-                System.out.println(field_operators);
-                System.out.println(field_type);
-                System.out.println(field_values);
-                System.out.println(is_update_value);
-                System.out.println(power);
-                System.out.println(table_name);
-                System.out.println(is_condition_field);
-                System.out.println(is_explore_field);
-                System.out.println(field_show_name);
-                System.out.println(is_updated);
 
+                            String insertSql = "insert into data_field value(" + "'" + id + "',"
+                                    + create_at
+                                    + ",'" + creator_id + "',"
+                                    + "'" + last_modifier_id + "',"
+                                    + last_modify_at + ","
+                                    + "'" + business_type + "',"
+                                    + "'" + field_category + "',"
+                                    + "'" + field_category_name + "',"
+                                    + "'" + field_name + "',"
+                                    + "'" + field_operators + "',"
+                                    + "'" + field_type + "',"
+                                    + "'" + field_values + "',"
+                                    + is_update_value + ","
+                                    + power + ","
+                                    + "'" + table_name + "',"
+                                    + is_condition_field + ","
+                                    + is_explore_field + ","
+                                    + "'" + field_show_name + "',"
+                                    + is_updated + ")";
+                            execUpdate(connection, insertSql);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+            };
 
-                String insertSql = "insert into data_field value(" + "'" + id + "',"
-                        + create_at
-                        + ",'" + creator_id + "',"
-                        + "'" + last_modifier_id + "',"
-                        + last_modify_at + ","
-                        + "'" + business_type + "',"
-                        + "'" + field_category + "',"
-                        + "'" + field_category_name + "',"
-                        + "'" + field_name + "',"
-                        + "'" + field_operators + "',"
-                        + "'" + field_type + "',"
-                        + "'" + field_values + "',"
-                        +  is_update_value + ","
-                        +  power + ","
-                        + "'" + table_name + "',"
-                        +  is_condition_field + ","
-                        +  is_explore_field + ","
-                        + "'" + field_show_name + "',"
-                        + is_updated + ")";
-                execUpdate(connection,insertSql);
-            }
-
+            query(connection, sql, handler);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
-    public static void main(String[] args) {
-        Properties prop = LoadFile.loadByResource("config.properties");
-        String url = prop.getProperty("url");
-//        String driverClassName = prop.getProperty("driver");
-//        String username = prop.getProperty("username");
-        String password = prop.getProperty("password");
 
-        String driverClassName = "com.mysql.cj.jdbc.Driver";
-        String username = "root";
+    public static void insertBatch(Connection connection) {
+        String insertSql = "INSERT INTO APP.stu VALUES(?, ?, ?, ?)";
+        PreparedStatementHandler handler = new PreparedStatementHandler() {
+            public void handle(PreparedStatement preparedStmt) {
+
+                try {
+                    preparedStmt.setString(1, "hanmei");
+                    preparedStmt.setInt(2, 12);
+                    preparedStmt.setBigDecimal(3, BigDecimal.valueOf(100.2));
+                    preparedStmt.setInt(4, 7);
+                    preparedStmt.addBatch();
+
+                    preparedStmt.setString(1, "lilei");
+                    preparedStmt.setInt(2, 11);
+                    preparedStmt.setBigDecimal(3, BigDecimal.valueOf(101.2));
+                    preparedStmt.setInt(4, 8);
+                    preparedStmt.addBatch();
+
+                    preparedStmt.executeBatch();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        preparedStmt.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        };
+
+        execBatchUpdate(connection, insertSql, handler);
+    }
+
+    public static void main(String[] args) {
+        Properties prop = LoadFile.loadByResource("app.yml");
+        String url = prop.getProperty("url");
+        String driverClassName = prop.getProperty("driver");
+        String username = prop.getProperty("username");
+        String password = prop.getProperty("password");
+//
+//        String url = "jdbc:mysql://localhost:3306/app?characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false";
+//        String driverClassName = "com.mysql.cj.jdbc.Driver";
+//        String username = "root";
+//        String password = "";
 
         Connection connection = getConnection(url, driverClassName, username, password);
-        run(connection);
+//        run(connection);
+
+        insertBatch(connection);
         close(connection);
     }
+}
+
+interface PreparedStatementHandler {
+    void handle(PreparedStatement ps);
+}
+
+interface ResultSetHandler {
+    Object handle(ResultSet rs);
 }
