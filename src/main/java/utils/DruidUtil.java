@@ -104,7 +104,7 @@ public class DruidUtil {
 
 
     public static void run(Connection connection) {
-        String sql = "SELECT * FROM data_field where business_type = 'order' and is_condition_field = 1";
+        String sql = "SELECT * FROM data_field_123 where business_type = 'order' and is_condition_field = 1";
         try {
             ResultSetHandler handler = new ResultSetHandler() {
                 @Override
@@ -117,9 +117,10 @@ public class DruidUtil {
                             String creator_id = rs.getString("creator_id");
                             String last_modifier_id = rs.getString("last_modifier_id");
                             Long last_modify_at = rs.getLong("last_modify_at");
-                            String business_type = "tag_order";
+                            String business_type = "segment_order";
                             String field_category = rs.getString("field_category");
                             String field_category_name = rs.getString("field_category_name");
+                            String field_condition_category = rs.getString("field_condition_category");
                             String field_name = rs.getString("field_name");
                             String field_operators = rs.getString("field_operators");
                             String field_type = rs.getString("field_type");
@@ -131,28 +132,11 @@ public class DruidUtil {
                             Integer is_explore_field = rs.getInt("is_explore_field");
                             String field_show_name = rs.getString("field_show_name");
                             Integer is_updated = rs.getInt("is_updated");
-                            System.out.println(id);
-                            System.out.println(create_at);
-                            System.out.println(creator_id);
-                            System.out.println(last_modifier_id);
-                            System.out.println(last_modify_at);
-                            System.out.println(business_type);
-                            System.out.println(field_category);
-                            System.out.println(field_category_name);
-                            System.out.println(field_name);
-                            System.out.println(field_operators);
-                            System.out.println(field_type);
-                            System.out.println(field_values);
-                            System.out.println(is_update_value);
-                            System.out.println(power);
-                            System.out.println(table_name);
-                            System.out.println(is_condition_field);
-                            System.out.println(is_explore_field);
-                            System.out.println(field_show_name);
-                            System.out.println(is_updated);
+                            String field_real_name = rs.getString("field_real_name");
 
 
-                            String insertSql = "insert into data_field value(" + "'" + id + "',"
+
+                            String insertSql = "insert into data_field_123 value(" + "'" + id + "',"
                                     + create_at
                                     + ",'" + creator_id + "',"
                                     + "'" + last_modifier_id + "',"
@@ -160,6 +144,7 @@ public class DruidUtil {
                                     + "'" + business_type + "',"
                                     + "'" + field_category + "',"
                                     + "'" + field_category_name + "',"
+                                    + "'" + field_condition_category + "',"
                                     + "'" + field_name + "',"
                                     + "'" + field_operators + "',"
                                     + "'" + field_type + "',"
@@ -170,7 +155,10 @@ public class DruidUtil {
                                     + is_condition_field + ","
                                     + is_explore_field + ","
                                     + "'" + field_show_name + "',"
-                                    + is_updated + ")";
+                                    + is_updated + ","
+                                    + "'" + field_real_name + "'"
+                                    + ")";
+                            System.out.println(insertSql);
                             execUpdate(connection, insertSql);
                         }
                     } catch (SQLException e) {
@@ -234,9 +222,8 @@ public class DruidUtil {
 //        String password = "";
 
         Connection connection = getConnection(url, driverClassName, username, password);
-//        run(connection);
-
-        insertBatch(connection);
+        run(connection);
+//        insertBatch(connection);
         close(connection);
     }
 }
