@@ -6,6 +6,7 @@ import org.javatuples.Triplet;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -51,15 +52,53 @@ public class MapHelper {
         return Triplet.with(field, 10, aReportArray);
     }
 
-    public static void main(String[] args){
+    public static void travel() {
 
-        urlMap.forEach((k,v) -> System.out.println(k + " : " +v));
+        urlMap.forEach((k, v) -> System.out.println("key : " + k + " value : " + v));
 
-        urlMap.put("url1", "http://news2.sina.com.cn");
+        urlMap.entrySet().forEach(entry -> {
+            System.out.println("Key : " + entry.getKey() + " Value : " + entry.getValue());
+        });
+
+        for (Map.Entry<String, String> entry : urlMap.entrySet()) {
+            System.out.println("key: " + entry.getKey() + " value: " + entry.getValue());
+        }
+
+        for (String key : urlMap.keySet()) {
+            System.out.println("Key : " + key + " value : " + urlMap.get(key));
+        }
+
+
+        Object[] keys = urlMap.keySet().toArray();
+        for (int i = 0; i < keys.length; i++) {
+            System.out.println("i: " + i);
+            System.out.println("Key : " + keys[i] + " value : " + urlMap.get(keys[i]));
+        }
+
+        Iterator<Map.Entry<String, String>> iterator = urlMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> entry = iterator.next();
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
+
+        Iterator<String> keyIterator = urlMap.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = keyIterator.next();
+            System.out.println("Key : " + key + " value : " + urlMap.get(key));
+        }
+    }
+
+    public static void main(String[] args) {
+
+        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
         System.out.println("---------");
 
-        urlMap.forEach((k,v) -> System.out.println(k + " : " +v));
+        urlMap.put("url1", "http://news2.sina.com.cn");
+        urlMap.put(null, "http://news3.sina.com.cn");
+        urlMap.put("url6", null);
+
+        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
     }
 
 
