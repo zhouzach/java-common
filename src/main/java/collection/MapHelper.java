@@ -21,6 +21,7 @@ public class MapHelper {
             put("url3", "http://news.qq.com");//腾讯新闻
             put("url4", "http://news.baidu.com");//百度新闻
             put("url5", "http://www.ifeng.com");//凤凰网
+            put("url5", "http://www.ifeng2.com");//凤凰网
         }
     };
 
@@ -48,6 +49,17 @@ public class MapHelper {
         String field = entry.getKey();
         ArrayList<String> aReportArray = entry.getValue();
         return Triplet.with(field, 10, aReportArray);
+    }
+
+    public static void main(String[] args){
+
+        urlMap.forEach((k,v) -> System.out.println(k + " : " +v));
+
+        urlMap.put("url1", "http://news2.sina.com.cn");
+
+        System.out.println("---------");
+
+        urlMap.forEach((k,v) -> System.out.println(k + " : " +v));
     }
 
 
