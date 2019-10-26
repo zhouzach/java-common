@@ -6,8 +6,8 @@ public class Report {
 
     @Data
     public static class Cell {
-        private Integer x;
-        private Integer y;
-        private String value;
+        public Integer x;
+        public Integer y;
+        public String value;
     }
 }
