@@ -87,6 +87,18 @@ public class MapHelper {
         }
     }
 
+    public static void filter() {
+        urlMap.entrySet().stream()
+                .filter(x -> "something".equals(x.getValue()))
+                .map(x->x.getValue())
+                .collect(Collectors.joining());
+
+        urlMap.entrySet().stream()
+                .filter(x -> x.getKey() == "url1")
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+    }
+
     public static void main(String[] args) {
 
         urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
