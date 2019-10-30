@@ -1,13 +1,12 @@
 package collection;
 
 import com.google.common.collect.ImmutableMap;
+import lombok.val;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Java tuple – Working with tuples in Java
@@ -93,12 +92,24 @@ public class MapHelper {
         urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
         System.out.println("---------");
+//
+//        urlMap.put("url1", "http://news2.sina.com.cn");
+//        urlMap.put(null, "http://news3.sina.com.cn");
+//        urlMap.put("url6", null);
+//
+//        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
-        urlMap.put("url1", "http://news2.sina.com.cn");
-        urlMap.put(null, "http://news3.sina.com.cn");
-        urlMap.put("url6", null);
+        Map<String, String> result = new LinkedHashMap<>();
+        urlMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
+//                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+//                        (oldValue, newValue) -> oldValue, LinkedHashMap::new))
+                .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
+      result.forEach((k, vv) -> System.out.println(k + " : " + vv));
 
-        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
+        System.out.println("---------");
+        List<Object> keyList = new ArrayList<>(result.keySet());
+        keyList.forEach(System.out::println);
+
     }
 
 
