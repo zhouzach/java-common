@@ -9,9 +9,12 @@ import java.util.stream.Stream;
  */
 public class ListHelper {
 
+    private static List<Integer> list = Arrays.asList(1, 2, 3);
+
     public static void main(String args[]) {
 
-        buildUnmodifiableList();
+//        buildUnmodifiableList();
+        sort();
     }
 
     public static void buildUnmodifiableList() {
@@ -30,7 +33,6 @@ public class ListHelper {
 
         // Printing the list
         System.out.println("List using Syntax 3: " + streamList.toString());
-
 
 
     }
@@ -54,7 +56,8 @@ public class ListHelper {
             {
                 add(1);
                 add(3);
-            } };
+            }
+        };
         System.out.println("ArrayList : " + list1.toString());
 
         // For LinkedList
@@ -62,7 +65,8 @@ public class ListHelper {
             {
                 add(2);
                 add(4);
-            } };
+            }
+        };
         System.out.println("LinkedList : " + llist.toString());
 
         // For Stack
@@ -70,7 +74,8 @@ public class ListHelper {
             {
                 add(3);
                 add(1);
-            } };
+            }
+        };
         System.out.println("Stack : " + stack.toString());
 
 
@@ -90,5 +95,12 @@ public class ListHelper {
 
         // Printing the list
         System.out.println("List using Syntax 2: " + streamArrayList.toString());
+    }
+
+    public static void sort() {
+        list.stream()
+                .sorted((e1, e2) -> -e1.toString().compareTo(e2.toString())).collect(Collectors.toList())
+                .forEach(System.out::println);
+
     }
 }

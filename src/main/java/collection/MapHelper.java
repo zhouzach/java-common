@@ -90,12 +90,13 @@ public class MapHelper {
     public static void filter() {
         urlMap.entrySet().stream()
                 .filter(x -> "something".equals(x.getValue()))
-                .map(x->x.getValue())
+                .map(x -> x.getValue())
                 .collect(Collectors.joining());
 
-        urlMap.entrySet().stream()
-                .filter(x -> x.getKey() == "url1")
+        val map = urlMap.entrySet().stream()
+                .filter(x -> "url1".equals(x.getKey()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        map.forEach((k, v) -> System.out.println(k + " : " + v));
 
     }
 
@@ -111,16 +112,16 @@ public class MapHelper {
 //
 //        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
-        Map<String, String> result = new LinkedHashMap<>();
         urlMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
-//                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-//                        (oldValue, newValue) -> oldValue, LinkedHashMap::new))
-                .forEachOrdered(x -> result.put(x.getKey(), x.getValue()));
-      result.forEach((k, vv) -> System.out.println(k + " : " + vv));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new))
+                .forEach((k, vv) -> System.out.println(k + " : " + vv));
 
         System.out.println("---------");
-        List<Object> keyList = new ArrayList<>(result.keySet());
-        keyList.forEach(System.out::println);
+        List<Object> keyList = new ArrayList<>(urlMap.keySet());
+        keyList.stream()
+                .sorted((e1, e2) -> e1.toString().compareTo(e2.toString())).collect(Collectors.toList())
+                .forEach(System.out::println);
 
     }
 
