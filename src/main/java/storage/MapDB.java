@@ -1,9 +1,11 @@
 package storage;
 
+import com.alibaba.fastjson.JSONObject;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 import org.mapdb.Serializer;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
 //https://jankotek.gitbooks.io/mapdb/content/quick-start/
@@ -26,22 +28,36 @@ public class MapDB {
      * By default, MapDB uses generic serialization, which can serialize any data type. It is faster and more memory efficient to use specialized serializers.
      * Also we can enable faster memory-mapped files on 64bit operating systems
      */
-    public static void fileDb(){
+    public void fileDb(){
         DB db = DBMaker
                 .fileDB("file.db")
                 .fileMmapEnable() //64bit operating systems
+                .transactionEnable()
                 .make();
-        ConcurrentMap map = db.hashMap("map",Serializer.STRING, Serializer.LONG).createOrOpen();
-        map.put("something", 111L);
+        ConcurrentMap map = db.hashMap("map",Serializer.STRING, Serializer.STRING).createOrOpen();
+        saveTo(map, db);
+//        map.put("something", 111L);
         Object object = map.get("something");
         System.out.println(object);
         db.close();
     }
 
+    private void saveTo(Map<String, String> store, DB localDB) {
+//        store.put("something", JSONObject.toJSONString(this));
+        store.put("something", "fileDB");
+        localDB.commit();
+    }
+
+    private void removeFrom(Map<String, String> store, DB localDB) {
+        store.remove("something");
+        localDB.commit();
+    }
+
     public static void main(String[] args) {
+        MapDB mapDB = new MapDB();
 
 //        memoryDb();
 
-        fileDb();
+        mapDB.fileDb();
     }
 }
