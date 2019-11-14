@@ -15,6 +15,7 @@ project/plugins/project/
 .idea
 *.iml
 *.zip
+*.db
 
 
 #test files
