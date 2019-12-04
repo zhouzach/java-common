@@ -5,6 +5,8 @@ import org.joda.time.DateTime;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -37,9 +39,23 @@ public class DateUtil {
         return new DateTime(date).toString("yyyy-MM-dd");
     }
 
+    public static String convertWeektoDate(int year, int week){
+        Calendar cld = Calendar.getInstance();
+        cld.set(Calendar.YEAR, year);
+        cld.set(Calendar.WEEK_OF_YEAR, week);
+
+        Date date = cld.getTime();
+        DateTime formattedDate  = new DateTime(date).minusDays(2);
+        String date1 = formattedDate.toString("yyyy-MM-dd");
+        String date2 = formattedDate.plusDays(6).toString("yyyy-MM-dd");
+
+        return date1 + "~" + date2;
+    }
     public static void main(String[] args) {
 
-        getBetweenDate("2018-01-25", "2018-01-29").forEach(System.out::println);
+//        getBetweenDate("2018-01-25", "2018-01-29").forEach(System.out::println);
+        String res =  convertWeektoDate(2019,48);
+        System.out.println(res);
     }
 
 }
