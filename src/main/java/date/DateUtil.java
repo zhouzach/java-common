@@ -39,7 +39,11 @@ public class DateUtil {
         return new DateTime(date).toString("yyyy-MM-dd");
     }
 
-    public static String convertWeektoDate(int year, int week){
+    public static String convertWeektoDate(String dateStr){
+        String[] dates = dateStr.split("\\.");
+        int year = Integer.parseInt(dates[0]);
+        int week = Integer.parseInt(dates[1]);
+
         Calendar cld = Calendar.getInstance();
         cld.set(Calendar.YEAR, year);
         cld.set(Calendar.WEEK_OF_YEAR, week);
@@ -54,7 +58,7 @@ public class DateUtil {
     public static void main(String[] args) {
 
 //        getBetweenDate("2018-01-25", "2018-01-29").forEach(System.out::println);
-        String res =  convertWeektoDate(2019,48);
+        String res =  convertWeektoDate("2019.48");
         System.out.println(res);
     }
 

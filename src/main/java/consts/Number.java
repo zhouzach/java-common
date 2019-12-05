@@ -24,7 +24,7 @@ public class Number {
 
     public static void main(String[] args){
 
-        boolean b =isNumeric("2000000000000");
+        boolean b =isNumeric("2019-11-26~2019-12-02");
         System.out.println(b);
     }
 
