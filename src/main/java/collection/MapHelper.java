@@ -109,11 +109,28 @@ public class MapHelper {
 
     }
 
+    public static void equals(){
+        Map<List<String>, String> urlMap = new HashMap<List<String>, String>() {
+            {
+                put(Arrays.asList("url1"), "http://news.sina.com.cn");//新浪新闻
+                put(Arrays.asList("url2"), "http://news.163.com");//网易新闻
+                put(Arrays.asList("url3"), "http://news.qq.com");//腾讯新闻
+                put(Arrays.asList("url4"), "http://news.baidu.com");//百度新闻
+                put(Arrays.asList("url5"), "http://www.ifeng.com");//凤凰网
+                put(Arrays.asList("url6"), "http://www.ifeng2.com");//凤凰网
+            }
+        };
+
+        String v =urlMap.get(Arrays.asList("url1"));
+
+        System.out.println(v);
+    }
+
     public static void main(String[] args) {
 
-        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
+//        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
-        System.out.println("---------");
+//        System.out.println("---------");
 //
 //        urlMap.put("url1", "http://news2.sina.com.cn");
 //        urlMap.put(null, "http://news3.sina.com.cn");
@@ -121,17 +138,18 @@ public class MapHelper {
 //
 //        urlMap.forEach((k, v) -> System.out.println(k + " : " + v));
 
-        urlMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue, LinkedHashMap::new))
-                .forEach((k, vv) -> System.out.println(k + " : " + vv));
+//        urlMap.entrySet().stream().sorted(Map.Entry.comparingByKey())
+//                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+//                        (oldValue, newValue) -> oldValue, LinkedHashMap::new))
+//                .forEach((k, vv) -> System.out.println(k + " : " + vv));
+//
+//        System.out.println("---------");
+//        List<Object> keyList = new ArrayList<>(urlMap.keySet());
+//        keyList.stream()
+//                .sorted((e1, e2) -> e1.toString().compareTo(e2.toString())).collect(Collectors.toList())
+//                .forEach(System.out::println);
 
-        System.out.println("---------");
-        List<Object> keyList = new ArrayList<>(urlMap.keySet());
-        keyList.stream()
-                .sorted((e1, e2) -> e1.toString().compareTo(e2.toString())).collect(Collectors.toList())
-                .forEach(System.out::println);
-
+        equals();
     }
 
 

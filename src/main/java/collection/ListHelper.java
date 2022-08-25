@@ -108,7 +108,7 @@ public class ListHelper {
 
     }
 
-    public  List<Report.Cell> secondarySort(List<Report.Cell> cells){
+    public List<Report.Cell> secondarySort(List<Report.Cell> cells) {
         // firstly sorted by cell's x
         Comparator<Report.Cell> firstComparator = Comparator.comparing(Report.Cell::getX);
         // secondly sorted by cell's y
@@ -125,12 +125,14 @@ public class ListHelper {
         list.add("b国中"); // 中->20013 unicode编码的4E2D
         list.add("b国美"); // 中->20013 unicode编码的4E2D
         list.add("国英"); // 英-->33521 unicode编码的82F1
+        list.add(null);
         list.add("1国英"); // 英-->33521 unicode编码的82F1
         list.add("1国美"); // 英-->33521 unicode编码的82F1
         list.add("国美"); // 美->32654 unicode编码的7F8E
         list.add("abc"); // 美->32654 unicode编码的7F8E
         list.add("aed"); // 美->32654 unicode编码的7F8E
         list.add("bca"); // 美->32654 unicode编码的7F8E
+        list.add(null);
         list.add("xyz"); // 美->32654 unicode编码的7F8E
         // 汉字unicode编码表 http://www.chi2ko.com/tool/CJK.htm
         // 输出字符编码对应的十进制
