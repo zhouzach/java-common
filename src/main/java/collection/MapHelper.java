@@ -51,6 +51,15 @@ public class MapHelper {
         return Triplet.with(field, 10, aReportArray);
     }
 
+    public static void bestTravel(){
+        Iterator<Map.Entry<String, String>> iterator = urlMap.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String, String> next = iterator.next();
+            System.out.println(next.getKey());
+            System.out.println(next.getValue());
+        }
+    }
+
     public static void travel() {
 
         urlMap.forEach((k, v) -> System.out.println("key : " + k + " value : " + v));

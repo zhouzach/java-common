@@ -164,7 +164,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
+            <version>8.0.16</version>
         </dependency>
 
         <dependency>
@@ -179,72 +179,93 @@
             <version>3.0.7</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.googlecode.aviator</groupId>
+            <artifactId>aviator</artifactId>
+            <version>5.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.krakens</groupId>
+            <artifactId>java-grok</artifactId>
+            <version>0.1.9</version>
+        </dependency>
+
 
 
     </dependencies>
 
     <build>
+        <directory>target</directory>
+        <outputDirectory>target/classes</outputDirectory>
+        <!--<finalName>${artifactId}-${version}</finalName>-->
+        <testOutputDirectory>target/test-classes</testOutputDirectory>
+        <!--<sourceDirectory>src/main/java, src/main/scala</sourceDirectory>-->
+        <!--<scriptSourceDirectory>src/main/scripts</scriptSourceDirectory>-->
+        <!--<testSourceDirectory>src/test/scala</testSourceDirectory>-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+        </testResources>
+
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
+                <version>3.8.1</version>
+
+            </plugin>
+
+
+
+            <!-- must add maven-shade-plugin plugin when the target jar is as executable jar-->
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <!-- Run shade goal on package phase -->
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <!--							<artifactSet>-->
+                            <!--								<excludes>-->
+                            <!--									<exclude>org.apache.flink:force-shading</exclude>-->
+                            <!--									<exclude>com.google.code.findbugs:jsr305</exclude>-->
+                            <!--									<exclude>org.slf4j:*</exclude>-->
+                            <!--									<exclude>log4j:*</exclude>-->
+                            <!--								</excludes>-->
+                            <!--							</artifactSet>-->
+                            <filters>
+                                <filter>
+                                    <!-- Do not copy the signatures in the META-INF folder.
+                                    Otherwise, this might cause SecurityExceptions when using the JAR. -->
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-<!--    <profiles>-->
-<!--        <profile>-->
-<!--            <id>intellij-idea-only</id>-->
-<!--            <activation>-->
-<!--                <property>-->
-<!--                    <name>idea.maven.embedder.version</name>-->
-<!--                </property>-->
-<!--            </activation>-->
-<!--            <build>-->
-<!--                <plugins>-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                        <configuration>-->
-<!--                            <release>13</release>-->
-<!--                            <compilerArgs>-->
-<!--                                <arg>&#45;&#45;enable-preview</arg>-->
-<!--                            </compilerArgs>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-<!--                </plugins>-->
-<!--            </build>-->
-<!--        </profile>-->
-<!--    </profiles>-->
-
-<!--    <build>-->
-<!--        <plugins>-->
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.8.1</version>-->
-<!--                <configuration>-->
-<!--                    &lt;!&ndash; Make sure we're not using Java 9+ APIs &ndash;&gt;-->
-<!--                    <source>8</source>-->
-<!--                    <target>8</target>-->
-<!--                    <release>8</release>-->
-<!--                    <annotationProcessorPaths>-->
-<!--                        <annotationProcessorPath>-->
-<!--                            <groupId>com.github.bsideup.jabel</groupId>-->
-<!--                            <artifactId>jabel-javac-plugin</artifactId>-->
-<!--                            <version>0.2.0</version>-->
-<!--                        </annotationProcessorPath>-->
-<!--                    </annotationProcessorPaths>-->
-<!--                    <annotationProcessors>-->
-<!--                        <annotationProcessor>com.github.bsideup.jabel.JabelJavacProcessor</annotationProcessor>-->
-<!--                    </annotationProcessors>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
-<!--    </build>-->
 
 
 </project>
